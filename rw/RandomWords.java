@@ -176,6 +176,8 @@ public class RandomWords extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         cutItem = new javax.swing.JMenuItem();
         copyItem = new javax.swing.JMenuItem();
+        editMenuItem = new javax.swing.JMenuItem();
+        insertMenuItem = new javax.swing.JMenuItem();
         pasteItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         findItem = new javax.swing.JMenuItem();
@@ -201,7 +203,7 @@ public class RandomWords extends javax.swing.JFrame {
         setTitle("Random Language Generator - [Untitled]"); // NOI18N
 
         wordTable.setAutoCreateRowSorter(true);
-        wordTable.setFont(new java.awt.Font("LCS-ConstructorII", 0, 24)); // NOI18N
+        wordTable.setFont(new java.awt.Font("LCS-ConstructorII", 0, 24));
         wordTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -432,6 +434,19 @@ public class RandomWords extends javax.swing.JFrame {
             }
         });
         editMenu.add(copyItem);
+
+        editMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        editMenuItem.setText("Edit ...");
+        editMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editMenuItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(editMenuItem);
+
+        insertMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        insertMenuItem.setText("Insert");
+        editMenu.add(insertMenuItem);
 
         pasteItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         pasteItem.setText("Paste"); // NOI18N
@@ -1559,6 +1574,26 @@ public class RandomWords extends javax.swing.JFrame {
         t.execute();
     }//GEN-LAST:event_refreshButtonActionPerformed
 
+    private void editMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuItemActionPerformed
+        if(wordTable.getSelectedRow()>=0){
+            rwEditEntryDialog eed = new rwEditEntryDialog(this, true);
+            RwDictionaryEntry entry = (RwDictionaryEntry)dictionary.getEntryAt(wordTable.getSelectedRow());
+            eed.posField.setText(entry.getPos());
+            eed.definitionField.setText(entry.getDefinition());
+            eed.rootField.setText(entry.getRoot());
+            eed.frequencyField.setText(entry.getFrequency()+"");
+            eed.syllableCountField.setText(entry.getSyllableCount()+"");
+            eed.pronunciationField.setText(entry.getMeaning());
+            eed.writtenFormField.setText(entry.getWrittenForm());
+            eed.transliterationField.setText(entry.getTransliteration());
+            eed.ptTagField.setText(entry.getPtTag());
+            //eed.syllableBreaksField.setText(entry.getSyllableBreaks());
+            eed.setVisible(true);
+        } else {
+            JOptionPane.showConfirmDialog(this, "Please select an entry to edit!", "Oops!", JOptionPane.PLAIN_MESSAGE,JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_editMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2054,35 +2089,51 @@ public class RandomWords extends javax.swing.JFrame {
             String cons = "bcdfghjklmnpqrstvwxz";
             String nv = "";
             String vc = "";
-            boolean vowelCarrierUsed = ((HashMap)writingSystem.get("Phonemes")).containsKey("VowelCarrier");
-            boolean nvu = ((HashMap)writingSystem.get("Phonemes")).containsKey("NoVowel");
+            boolean vowelCarrierUsed = phonemes.containsKey("VowelCarrier");
+            boolean nvu = phonemes.containsKey("NoVowel");
             if(vowelCarrierUsed){
-                vc = (((HashMap)writingSystem.get("Phonemes")).get("VowelCarrier")+"").trim();
+                vc = (phonemes.get("VowelCarrier")+"").trim();
             }
             if(nvu){
-                nv = (((HashMap)writingSystem.get("Phonemes")).get("NoVowel")+"").trim();
+                nv = (phonemes.get("NoVowel")+"").trim();
             }
             for(int a=0;a<original.length();a++){
                 if(vowelString.contains(original.charAt(0)+"") && vowelCarrierUsed && a == 0){
-                    trans.append(vc + original.charAt(a));
+                    trans.append(vc + phonemes.get(original.charAt(a)+""));
                 } else if (a > 0 && vowelString.contains(original.charAt(a)+"")
                         && vowelString.contains(original.charAt(a - 1)+"")
                         && vowelCarrierUsed){
-                    trans.append(vc+original.charAt(a));
+                    trans.append(vc+phonemes.get(original.charAt(a)+""));
                 } else if (a < (original.length()-1) && cons.contains(original.charAt(a)+"")
                         && cons.contains(original.charAt(a + 1)+"")
                         && nvu){
-                    trans.append(original.charAt(a) + nv);
+                    trans.append(phonemes.get(original.charAt(a)+"") + nv);
                 } else if(a == (original.length()-1) && cons.contains(original.charAt(a)+"")
                         && nvu){
-                    trans.append(original.charAt(a) + nv);
+                    trans.append(phonemes.get(original.charAt(a)+"") + nv);
                 } else {
-                    trans.append(original.charAt(a)+"");
+                    trans.append(phonemes.get(original.charAt(a)+"")+"");
                 }
             }
         }
         if(writingSystem.get("System") == "Syllabary"){
-
+            String vwls = vowels.toString().replaceAll(",", "");
+            String cnsnts = consonants.toString().replaceAll(",", "");
+            HashMap syllables = (HashMap)writingSystem.get("Syllables");
+            original += "-";
+            int position = 0;
+            while (position < original.length()-1) {
+                if (vwls.contains(original.charAt(position)+"")){
+                    trans.append(syllables.get("NC"+original.charAt(position)));
+                    position ++;
+                } else if (cnsnts.contains(original.charAt(position)+"") && vwls.contains(original.charAt(position + 1)+"")) {
+                    trans.append(syllables.get(original.charAt(position) + "" + original.charAt(position + 1)));
+                    position += 2;
+                } else {
+                    trans.append(syllables.get(original.charAt(position) + "NV"));
+                    position ++;
+                }
+            }
         }
         if(writingSystem.get("System") == "Multigraphic"){
             String g=writingSystem.get("GraphemesPerGlyph")+"";
@@ -2119,12 +2170,14 @@ public class RandomWords extends javax.swing.JFrame {
     private rw.RwDictionary dictionary;
     private javax.swing.table.DefaultTableModel dtm;
     private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem editMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem findItem;
     private javax.swing.JMenuItem generateItem;
     private javax.swing.JButton generateWordsButton;
     private javax.swing.JMenuItem helpContentsItem;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem insertMenuItem;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
