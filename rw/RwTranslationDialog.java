@@ -13,6 +13,7 @@ package rw;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.font.TextAttribute;
 import java.awt.print.PrinterException;
 import javax.swing.JTextPane;
 import javax.swing.text.MutableAttributeSet;
@@ -403,6 +404,7 @@ public class RwTranslationDialog extends javax.swing.JDialog {
             }
             translated.append((punctuationMap.get(" ")+""));
         }
+        translationTextPane.getDocument().putProperty(TextAttribute.RUN_DIRECTION,TextAttribute.RUN_DIRECTION_RTL);
         translationTextPane.setText(translated.toString().trim());
         /*HashMap phonemes = (HashMap)((RandomWords)parent).getWritingSystem().get("Phonemes");
         HashMap glyphUses = (HashMap)((RandomWords)parent).getWritingSystem().get("GlyphUseMap");

@@ -95,33 +95,85 @@ public class RandomWords extends javax.swing.JFrame {
     private void initComponents() {
 
         vowels = new java.util.Vector();
-        vowels.add("a");
-        vowels.add("e");
-        vowels.add("i");
-        vowels.add("o");
-        vowels.add("u");
+        for(int a=0;a<20;a++){
+            vowels.add("a");
+        }
+        for(int a=0;a<20;a++){
+            vowels.add("e");
+        }
+        for(int a=0;a<20;a++){
+            vowels.add("i");
+        }
+        for(int a=0;a<20;a++){
+            vowels.add("o");
+        }
+        for(int a=0;a<20;a++){
+            vowels.add("u");
+        }
         consonants = new java.util.Vector();
-        consonants.add("b");
-        consonants.add("c");
-        consonants.add("d");
-        consonants.add("f");
-        consonants.add("g");
-        consonants.add("h");
-        consonants.add("j");
-        consonants.add("k");
-        consonants.add("l");
-        consonants.add("m");
-        consonants.add("n");
-        consonants.add("p");
-        consonants.add("q");
-        consonants.add("r");
-        consonants.add("s");
-        consonants.add("t");
-        consonants.add("v");
-        consonants.add("w");
-        consonants.add("x");
-        consonants.add("y");
-        consonants.add("z");
+        for(int a=0;a<5;a++){
+            consonants.add("b");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("c");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("d");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("f");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("g");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("h");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("j");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("k");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("l");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("m");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("n");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("p");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("q");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("r");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("s");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("t");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("v");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("w");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("x");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("y");
+        }
+        for(int a=0;a<5;a++){
+            consonants.add("z");
+        }
         words = new java.util.Vector();
         dictionary = new rw.RwDictionary();
         tcr = new rw.RwCellRenderer();

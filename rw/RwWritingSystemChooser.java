@@ -44,6 +44,34 @@ public class RwWritingSystemChooser extends javax.swing.JDialog {
         super(parent, title, modal);
         initComponents();
         setLocationRelativeTo(parent);
+        int pos = 1;
+        Vector vowls =  new Vector();
+        Vector consnts = new Vector();
+        for (int v=0;v<vowels.size();v++){
+            vowls.add(new String(vowels.elementAt(v)+""));
+        }
+        for (int v=0;v<consonants.size();v++){
+            consnts.add(new String(consonants.elementAt(v)+""));
+        }
+        String sound = vowels.elementAt(0)+"";
+        while(pos < vowls.size()){
+            if(vowls.elementAt(pos).equals(sound)){
+                vowls.remove(pos);
+            } else {
+                sound = vowls.elementAt(pos)+"";
+                pos ++;
+            }
+        }
+        pos = 1;
+        sound = consnts.elementAt(0)+"";
+        while(pos < consnts.size()){
+            if(consnts.elementAt(pos).equals(sound)){
+                consnts.remove(pos);
+            } else {
+                sound = consnts.elementAt(pos)+"";
+                pos ++;
+            }
+        }
         DefaultTableModel dtm4 = (DefaultTableModel)syllabaryTable.getModel();
         String fontname = (String)writingSystem.get("Font");
         Font defaultFont = new Font("LCS-ConstructorII",0,14);
@@ -54,21 +82,21 @@ public class RwWritingSystemChooser extends javax.swing.JDialog {
 
         dtm4.setColumnCount(0);
         dtm4.setRowCount(0);
-        Vector sconsonants = new Vector(consonants);
+        Vector sconsonants = new Vector(consnts);
         if (!sconsonants.contains("NC")){
             sconsonants.add("NC");
         }
         dtm4.addColumn(" ", sconsonants);
         vowelNumCombo.removeAllItems();
         consonantNumCombo.removeAllItems();
-        for(int a = 0; a<vowels.size(); a++){
-            dtm4.addColumn(vowels.elementAt(a));
-            vowelNumCombo.addItem(vowels.elementAt(a));
+        for(int a = 0; a<vowls.size(); a++){
+            dtm4.addColumn(vowls.elementAt(a));
+            vowelNumCombo.addItem(vowls.elementAt(a));
         }
         dtm4.addColumn("NV");
         vowelNumCombo.addItem("NV");
-        for(int a=0; a<consonants.size(); a++){
-            consonantNumCombo.addItem(consonants.elementAt(a));
+        for(int a=0; a<consnts.size(); a++){
+            consonantNumCombo.addItem(consnts.elementAt(a));
         }
         consonantNumCombo.addItem("NC");
         DefaultTableModel dtm=(DefaultTableModel)alphaTable.getModel();
@@ -82,8 +110,8 @@ public class RwWritingSystemChooser extends javax.swing.JDialog {
         dtm2.setRowCount(0);
         dtm3.setRowCount(0);
         Vector ds=new Vector();
-        ds.addAll(vowels);
-        ds.addAll(consonants);
+        ds.addAll(vowls);
+        ds.addAll(consnts);
         Object[] ob=ds.toArray();
         Arrays.sort(ob);
         dtm.setRowCount(ob.length);
@@ -91,6 +119,7 @@ public class RwWritingSystemChooser extends javax.swing.JDialog {
         dtm2.setRowCount(ob.length);
         dtm3.setRowCount(ob.length);
         HashMap phonemes = (HashMap)writingSystem.get("Phonemes");
+        System.out.println(phonemes+"");
         for(int a=0; a<ob.length; a++){
             dtm.setValueAt(ob[a], a, 0);
             dtm1.setValueAt(ob[a], a, 0);
@@ -211,8 +240,8 @@ public class RwWritingSystemChooser extends javax.swing.JDialog {
             HashMap syllables = (HashMap)writingSystem.get("Syllables");
             Object[] keys = syllables.keySet().toArray();
             Arrays.sort(keys);
-            Object[] vwls=vowels.toArray();
-            Object[] cnsnts=consonants.toArray();
+            Object[] vwls=vowls.toArray();
+            Object[] cnsnts=consnts.toArray();
             Arrays.sort(vwls, new LengthReverseComparator());
             Arrays.sort(cnsnts, new LengthReverseComparator());
             for(int s=0; s < keys.length; s++){
