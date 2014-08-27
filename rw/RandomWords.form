@@ -4,12 +4,12 @@
   <NonVisualComponents>
     <Component class="java.util.Vector" name="vowels">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="vowels.add(&quot;a&quot;);&#xd;&#xa;vowels.add(&quot;e&quot;);&#xd;&#xa;vowels.add(&quot;i&quot;);&#xd;&#xa;vowels.add(&quot;o&quot;);&#xd;&#xa;vowels.add(&quot;u&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="for(int a=0;a&lt;20;a++){&#xd;&#xa;    vowels.add(&quot;a&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;20;a++){&#xd;&#xa;    vowels.add(&quot;e&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;20;a++){&#xd;&#xa;    vowels.add(&quot;i&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;20;a++){&#xd;&#xa;    vowels.add(&quot;o&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;20;a++){&#xd;&#xa;    vowels.add(&quot;u&quot;);&#xd;&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="java.util.Vector" name="consonants">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="consonants.add(&quot;b&quot;);&#xd;&#xa;consonants.add(&quot;c&quot;);&#xd;&#xa;consonants.add(&quot;d&quot;);&#xd;&#xa;consonants.add(&quot;f&quot;);&#xd;&#xa;consonants.add(&quot;g&quot;);&#xd;&#xa;consonants.add(&quot;h&quot;);&#xd;&#xa;consonants.add(&quot;j&quot;);&#xd;&#xa;consonants.add(&quot;k&quot;);&#xd;&#xa;consonants.add(&quot;l&quot;);&#xd;&#xa;consonants.add(&quot;m&quot;);&#xd;&#xa;consonants.add(&quot;n&quot;);&#xd;&#xa;consonants.add(&quot;p&quot;);&#xd;&#xa;consonants.add(&quot;q&quot;);&#xd;&#xa;consonants.add(&quot;r&quot;);&#xd;&#xa;consonants.add(&quot;s&quot;);&#xd;&#xa;consonants.add(&quot;t&quot;);&#xd;&#xa;consonants.add(&quot;v&quot;);&#xd;&#xa;consonants.add(&quot;w&quot;);&#xd;&#xa;consonants.add(&quot;x&quot;);&#xd;&#xa;consonants.add(&quot;y&quot;);&#xd;&#xa;consonants.add(&quot;z&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;b&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;c&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;d&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;f&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;g&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;h&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;j&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;k&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;l&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;m&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;n&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;p&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;q&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;r&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;s&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;t&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;v&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;w&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;x&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;y&quot;);&#xd;&#xa;}&#xd;&#xa;for(int a=0;a&lt;5;a++){&#xd;&#xa;    consonants.add(&quot;z&quot;);&#xd;&#xa;}&#xd;&#xa;"/>
       </AuxValues>
     </Component>
     <Component class="java.util.Vector" name="words">
@@ -38,6 +38,8 @@
       </AuxValues>
     </Component>
     <Component class="java.lang.String" name="syllablePatternList">
+    </Component>
+    <Component class="rw.RwDictionaryEntry" name="pastableEntry">
     </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
@@ -152,9 +154,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Undo" noResource="true"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="undoItemActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="redoItem">
               <Properties>
@@ -163,9 +162,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Redo" noResource="true"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="redoItemActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
             </MenuItem>
@@ -207,8 +203,11 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+I"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Insert"/>
+                <Property name="text" type="java.lang.String" value="Insert ..."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="pasteItem">
               <Properties>
@@ -232,17 +231,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="findItemActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="replaceItem">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+R"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Replace" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="replaceItemActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

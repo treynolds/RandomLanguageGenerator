@@ -485,6 +485,7 @@
             </BevelBorder>
           </Border>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[120, 30]"/>
         </Property>
@@ -572,6 +573,7 @@
             </BevelBorder>
           </Border>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[120, 30]"/>
         </Property>
