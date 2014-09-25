@@ -22,9 +22,7 @@ import javax.xml.transform.stream.*;
 import javax.xml.transform.sax.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.event.UndoableEditListener;
-import javax.swing.undo.CannotRedoException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.undo.UndoManager;
 
 /*
@@ -644,6 +642,8 @@ public class RandomWords extends javax.swing.JFrame {
 
     private void loadDefinitionsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDefinitionsButtonActionPerformed
         final JFileChooser jfc = new JFileChooser(".");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("Random Languange Generator Dictionary Files", "rdf");
+        jfc.setFileFilter(fnef);
         int chosenOption = jfc.showOpenDialog(rootPane);
         if (chosenOption != jfc.CANCEL_OPTION) {
             final RwProgressPane pgp = new RwProgressPane(this, false, false);
@@ -653,7 +653,7 @@ public class RandomWords extends javax.swing.JFrame {
                     Integer finished = new Integer(0);
                     File definitions = jfc.getSelectedFile();
                     definitionsName = definitions.getName();
-                    if (definitionsName.endsWith(".csv")) {
+                    if (definitionsName.endsWith(".rdf")) {
                         definitionsName = definitionsName.substring(0,
                                 definitionsName.length() - 4);
                     }
@@ -867,6 +867,8 @@ public class RandomWords extends javax.swing.JFrame {
         wordCount = 0;
         dictionary.clear();
         final JFileChooser jfc = new JFileChooser(".");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("Random Languange Generator Language files", "rlf");
+        jfc.setFileFilter(fnef);
         int chosenOption = jfc.showOpenDialog(this);
         if (chosenOption != jfc.CANCEL_OPTION) {
             final RwProgressPane pgp = new RwProgressPane(this, false, true);
@@ -879,11 +881,10 @@ public class RandomWords extends javax.swing.JFrame {
                     try {
                         SAXParser saxParser = factory.newSAXParser();
                         DefaultHandler handler = new DefaultHandler() {
-
                             boolean vowelsTag = false;
                             boolean consonantsTag = false;
                             boolean ruleTag = false;
-                            boolean syllableTag = false;
+                            boolean syllablePatternsTag = false;
                             boolean dictionaryEntryTag = false;
                             boolean numberOfLettersTag = false;
                             boolean capRuleTag = false;
@@ -903,10 +904,17 @@ public class RandomWords extends javax.swing.JFrame {
                             boolean glyph2Tag = false;
                             boolean glyph3Tag = false;
                             boolean glyph4Tag = false;
+                            boolean syllablesTag = false;
+                            boolean syllableTag = false;
+                            boolean skeyTag = false;
+                            boolean svalueTag = false;
 
                             HashMap phnms= new HashMap();
+                            HashMap sylbs = new HashMap();
                             String key ="";
                             String value = "";
+                            String skey = "";
+                            String svalue = "";
 
                             public void startElement(String uri, String localName, String qName,
                                     Attributes attributes) throws SAXException {
@@ -921,8 +929,8 @@ public class RandomWords extends javax.swing.JFrame {
                                 if (qName.equalsIgnoreCase("Rule")) {
                                     ruleTag = true;
                                 }
-                                if (qName.equalsIgnoreCase("Syllables")) {
-                                    syllableTag = true;
+                                if (qName.equalsIgnoreCase("SyllablePatterns")) {
+                                    syllablePatternsTag = true;
                                 }
                                 if (qName.equalsIgnoreCase("DictionaryEntry")) {
                                     dictionaryEntryTag = true;
@@ -977,6 +985,18 @@ public class RandomWords extends javax.swing.JFrame {
                                 }
                                 if (qName.equalsIgnoreCase("Punctuation")){
                                     punctTag = true;
+                                }
+                                if (qName.equalsIgnoreCase("Syllables")){
+                                    syllablesTag = true;
+                                }
+                                if (qName.equalsIgnoreCase("Syllable")){
+                                    syllableTag = true;
+                                }
+                                if(qName.equals("skey")){
+                                    skeyTag = true;
+                                }
+                                if(qName.equals("svalue")){
+                                    svalueTag = true;
                                 }
                             }
 
@@ -1041,9 +1061,9 @@ public class RandomWords extends javax.swing.JFrame {
                                     posRules.put(ps, r);
                                     ruleTag = false;
                                 }
-                                if (syllableTag) {
+                                if (syllablePatternsTag) {
                                     syllablePatternList = new String(ch, start, length);
-                                    syllableTag = false;
+                                    syllablePatternsTag = false;
                                 }
                                 if (dictionaryEntryTag) {
                                     wordCount++;
@@ -1162,7 +1182,22 @@ public class RandomWords extends javax.swing.JFrame {
                                 if(glyphUseTag){
 
                                 }
+                                if(syllablesTag){
+                                    writingSystem.put("Syllables", sylbs);
+                                    syllablesTag = false;
+                                }
+                                if(skeyTag){
+                                    skey = new String(ch, start, length);
+                                    skeyTag = false;
+                                }
+                                if(svalueTag){
+                                    String coded = new String(ch, start, length);
+                                    svalue = rwStringConverter.convertFromHex(coded);
+                                    sylbs.put(skey,svalue);
+                                    svalueTag = false;
+                                }
                             }
+
                             public void endDocument() {
                                 System.out.println("Whoopie!");
                             }
@@ -1243,7 +1278,7 @@ public class RandomWords extends javax.swing.JFrame {
             hd.endCDATA();
             hd.endElement("", "", "Consonants");
 
-            hd.startElement("", "", "Syllables", atts);
+            hd.startElement("", "", "SyllablePatterns", atts);
             hd.startCDATA();
             hd.characters(syllablePatternList.toCharArray(), 0, syllablePatternList.length());
             hd.endCDATA();
@@ -1452,10 +1487,12 @@ public class RandomWords extends javax.swing.JFrame {
 
     private void saveAsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsItemActionPerformed
         JFileChooser jfc = new JFileChooser(".");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("Random Languange Generator Language Files", "rlf");
+        jfc.addChoosableFileFilter(fnef);
         int chosenOption = jfc.showSaveDialog(this);
         if (chosenOption != JFileChooser.CANCEL_OPTION) {
             projectName = jfc.getSelectedFile().getPath();
-            if (projectName.endsWith(".xml")) {
+            if (projectName.endsWith(".rlf")) {
                 projectName = projectName.substring(0, projectName.length() - 4);
                 setTitle("Random Language Generator " + jfc.getSelectedFile().getName());
                 saveItemActionPerformed(evt);
@@ -1484,11 +1521,13 @@ public class RandomWords extends javax.swing.JFrame {
 
     private void saveDefinitionsAsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDefinitionsAsItemActionPerformed
         JFileChooser jfc = new JFileChooser(".");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("Random Languange Generator Dictionary Files", "rdf");
+        jfc.addChoosableFileFilter(fnef);
         int chosenOption = jfc.showSaveDialog(this);
         if (chosenOption != JFileChooser.CANCEL_OPTION) {
             File defs = jfc.getSelectedFile();
             definitionsName = defs.getPath();
-            if (definitionsName.endsWith(".csv")) {
+            if (definitionsName.endsWith(".rdf")) {
                 definitionsName = definitionsName.substring(0,
                         definitionsName.length() - 4);
             }
@@ -1558,11 +1597,15 @@ public class RandomWords extends javax.swing.JFrame {
     }//GEN-LAST:event_generateItemActionPerformed
 
     private void helpContentsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpContentsItemActionPerformed
-        // TODO add your handling code here:
+        rwHelpDialog rhd = new rwHelpDialog(this, true);
+        rhd.setLocationRelativeTo(this);
+        rhd.setResizable(false);
+        rhd.setVisible(true);
     }//GEN-LAST:event_helpContentsItemActionPerformed
 
     private void aboutItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutItemActionPerformed
         rwAboutDialog abt = new rwAboutDialog((java.awt.Frame)this,true);
+        abt.setLocationRelativeTo(this);
         abt.setVisible(true);
     }//GEN-LAST:event_aboutItemActionPerformed
 
